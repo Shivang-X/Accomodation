@@ -76,7 +76,7 @@ const Houses = () => {
                     </option>
                 )}
                 {state_arr.map((state, i) => (
-                    <option value={state}>{state}</option>
+                    <option key={i} value={state}>{state}</option>
                 ))}
                 </select>
                 <select className="select-city" disabled={state=="" && _state==undefined ? true : false} onChange={(e) => setCity(e.target.value)}>
@@ -89,8 +89,7 @@ const Houses = () => {
                     City
                     </option>
                 )}
-                {city_arr[state].split("|").map(city => <option>{city}</option>)
-                }
+                {city_arr[state].split("|").map((city, i) => <option key={i}>{city}</option>)}
                 </select>
                 <button disabled={city=="" && _city==undefined ? true : false} type="submit"> Search </button>
             </div>
