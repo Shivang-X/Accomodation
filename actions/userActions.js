@@ -72,6 +72,7 @@ export const updateProfile = (user, id) => async(dispatch) => {
     // console.log(session);
     // const { data } = await axios.post("http://localhost:8000/profile/update", user, { withCredentials: true});
     const { data } = await axios.post("http://localhost:3000/api/profile/update", {user, id}, { withCredentials: true});
+    // const { data } = await axios.post("http://localhost:3000/api/hello", {user, id}, { withCredentials: true});
     
     dispatch({
       type: "UPDATE_PROFILE_SUCCESS",

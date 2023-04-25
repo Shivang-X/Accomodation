@@ -1,14 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
-import { useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-
 
 const Header = () => {
   const router = useRouter();
   const session = useSession();
+  console.log(session)
 
   return (
     <>
