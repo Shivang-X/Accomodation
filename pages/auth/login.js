@@ -32,7 +32,7 @@ const Login = () => {
         document.getElementById('password').classList.add('red-border');
         dispatch(clearErrors())
       } 
-    }, [isAuthenticated, error])
+    }, [dispatch, isAuthenticated, error, router, user])
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -48,7 +48,7 @@ const Login = () => {
     <>
       <div className="login">
         <div className="left">
-          <Image src="/home.png" width={500} height={500} />
+          <Image src="/home.png" alt="" width={500} height={500} />
         </div>
         <div className="right">
           <form className="form" onSubmit={submitHandler}>

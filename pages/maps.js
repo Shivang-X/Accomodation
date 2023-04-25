@@ -13,7 +13,7 @@ const Maps = () => {
 
     useEffect(() =>{
       dispatch(getAd())
-    }, [])
+    }, [dispatch])
 
 
   return (

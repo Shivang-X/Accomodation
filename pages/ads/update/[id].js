@@ -5,7 +5,7 @@ import { getUserAd, updateAd, clearErrors } from '@/actions/adActions';
 import MapCaller from '@/components/Map'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-import { useSession, getSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
 
 
@@ -94,7 +94,7 @@ const UpdateHouses = ({ session }) => {
         }
 
     }, 
-    [id, ad, isUpdated, error]
+    [dispatch, router, id, ad, isUpdated, error]
     )
 
 
@@ -145,12 +145,12 @@ const UpdateHouses = ({ session }) => {
 
                 <select className="select-country" value={state} disabled={country=="" ? true : false} onChange={(e) => setState(e.target.value)}>
                     <option value="" disabled selected hidden> State </option>
-                    {state_arr.map(state => <option value={state}>{state}</option>)}
+                    {state_arr.map((state, i) => <option key={i} value={state}>{state}</option>)}
                 </select>
 
                 <select className="select-country" value={city} disabled={state=="" ? true : false} onChange={(e) => setCity(e.target.value)}>
                     <option value="" disabled selected hidden> City </option>
-                    {city_arr[state].split('|').map(city => <option value={city}>{city}</option>)}
+                    {city_arr[state].split('|').map((city, i) => <option key={i} value={city}>{city}</option>)}
                 </select>
             </div>
 

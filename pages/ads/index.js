@@ -98,10 +98,10 @@ const Houses = () => {
         {loading ? (<CardLoader/>) : (
             ads.length > 0 ? (
                 ads.map((ad, index) => 
-                    <div className="cards">
+                    <div key={index} className="cards">
                         <div className="card">
                             <div className="top">
-                                <img className="image" src="/house.jpg" />
+                                <Image width={1000} height={160} alt="House snaps" className="image" src="/house.jpg" />
                                 <div className="data">
                                     <div className="head">
                                         <div className="head-data">
@@ -135,10 +135,10 @@ const Houses = () => {
                                         <span className="price">$ {ad.price}</span>
                                     </div>
                                     <div className="room-info">
-                                        <div className="room-data"><Image className="room-icon" src="/room-icon.png" width="1600" height="1600"/><span className="living_room">{ad.living_rooms}</span></div>
-                                        <div className="room-data"><Image className="room-icon" src="/bathroom-icon.png" width="1600" height="1600"/><span className="bath_room">{ad.bath_rooms}</span></div>
-                                        <div className="room-data"><Image className="room-icon" src="/bedroom-icon.png" width="1600" height="1600"/><span className="bed_room">{ad.bed_rooms}</span></div>
-                                        <div className="room-data"><Image className="room-icon" src="/kitchen-icon.png" width="1600" height="1600"/><span className="kitchens">{ad.kitchens}</span></div>
+                                        <div className="room-data"><Image className="room-icon" alt="House living_room" src="/room-icon.png" width="1600" height="1600"/><span className="living_room">{ad.living_rooms}</span></div>
+                                        <div className="room-data"><Image className="room-icon" alt="House bath_room" src="/bathroom-icon.png" width="1600" height="1600"/><span className="bath_room">{ad.bath_rooms}</span></div>
+                                        <div className="room-data"><Image className="room-icon" alt="House bed_room" src="/bedroom-icon.png" width="1600" height="1600"/><span className="bed_room">{ad.bed_rooms}</span></div>
+                                        <div className="room-data"><Image className="room-icon" alt="House kitchens" src="/kitchen-icon.png" width="1600" height="1600"/><span className="kitchens">{ad.kitchens}</span></div>
                                     </div>
                                     <p className="description">{ad.description}</p>
                                 </div>

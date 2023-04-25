@@ -8,6 +8,7 @@ import { MdOutlineAlternateEmail } from 'react-icons/md';
 import { FiPhoneCall } from 'react-icons/fi';
 import { useRouter } from 'next/router'; 
 import { getSession } from "next-auth/react";
+import Image from 'next/image';
 
 const UpdateProfile = ({ session }) => {
 
@@ -21,7 +22,7 @@ const UpdateProfile = ({ session }) => {
     
     useEffect(() => {
         if(session.status === 'unauthenticated') router.push({ pathname: "/"});
-    }, [session.status])
+    }, [router, session.status])
 
     useEffect(() => {
         if (session.user) {
@@ -44,7 +45,7 @@ const UpdateProfile = ({ session }) => {
             toast(error)
             dispatch(clearErrors())
         }
-    }, [dispatch, isUpdated, user, error]);
+    }, [dispatch, router, session.user, isUpdated, user, error]);
 
     const handleClick = () => {
         router.push('/profile')
@@ -60,7 +61,7 @@ const UpdateProfile = ({ session }) => {
         <>
             <div className="update-profile">
             <div className="left">
-            <img src="/home.png" />
+            <Image src="/home.png" alt="" width="500" height="500"/>
             </div>
             <div className="right">
             <form className="form" onSubmit={submitHandler}>

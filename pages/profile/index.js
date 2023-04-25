@@ -14,6 +14,7 @@ import { useSession } from "next-auth/react";
 import { getSession } from "next-auth/react";
 import { signOut } from 'next-auth/react'
 import { useEffect } from "react";
+import Image from "next/image";
 
 const Profile = ({ session }) => {
 
@@ -23,7 +24,7 @@ const Profile = ({ session }) => {
     useEffect(() => {
         if(session.status === 'unauthenticated') router.push({ pathname: "/"});
         // if(session.status === 'loading') console.log("Loading");
-    }, [session.status])
+    }, [router, session.status])
 
     const { loading: adloading, ads } = useSelector((state) => state.getads);
 
@@ -40,7 +41,7 @@ const Profile = ({ session }) => {
         <div className="profile-section">
             <div className="profile">
                 <div className="left">
-                    <img src="/home.png" />
+                    <Image src="/home.png" alt="" width="500" height="500"/>
                 </div>
                 <div className="right">
                     {session.status === 'loading' ? (<Loader/>) : (
@@ -69,10 +70,10 @@ const Profile = ({ session }) => {
             {adloading ? (<CardLoader/>) : (
             ads.length > 0 ? (
                 ads.map((ad, index) => 
-                    <div className="cards">
+                    <div className="cards" key={index}>
                         <div className="card">
                             <div className="top">
-                                <img className="image" src="/house.jpg" />
+                                <Image width={1000} height={160} alt="House snaps" className="image" src="/house.jpg" />
                                 <div className="data">
                                     <div className="head">
                                         <div className="head-data">
@@ -107,10 +108,10 @@ const Profile = ({ session }) => {
                                         <span className="price">$ {ad.price}</span>
                                     </div>
                                     <div className="room-info">
-                                        <div className="room-data"><img className="room-icon" src="/room-icon.png"/><span className="living_room">{ad.living_rooms}</span></div>
-                                        <div className="room-data"><img className="room-icon" src="/bathroom-icon.png"/><span className="bath_room">{ad.bath_rooms}</span></div>
-                                        <div className="room-data"><img className="room-icon" src="/bedroom-icon.png"/><span className="bed_room">{ad.bed_rooms}</span></div>
-                                        <div className="room-data"><img className="room-icon" src="/kitchen-icon.png"/><span className="kitchens">{ad.kitchens}</span></div>
+                                        <div className="room-data"><Image className="room-icon" alt="House living_room" src="/room-icon.png" width="1600" height="1600"/><span className="living_room">{ad.living_rooms}</span></div>
+                                        <div className="room-data"><Image className="room-icon" alt="House bath_room" src="/bathroom-icon.png" width="1600" height="1600"/><span className="bath_room">{ad.bath_rooms}</span></div>
+                                        <div className="room-data"><Image className="room-icon" alt="House bed_room" src="/bedroom-icon.png" width="1600" height="1600"/><span className="bed_room">{ad.bed_rooms}</span></div>
+                                        <div className="room-data"><Image className="room-icon" alt="House kitchens" src="/kitchen-icon.png" width="1600" height="1600"/><span className="kitchens">{ad.kitchens}</span></div>
                                     </div>
                                     <p className="description">{ad.description}</p>
                                 </div>

@@ -45,7 +45,7 @@ const Map = ({ ad, location, width, height }) => {
                 url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
                 />
                 <SetLocation location={location}/>
-                {ad.map(ad => <Marker position={[ad.latitude, ad.longitude]}><Popup className='popup'><Link herf={`/ads/search/${ad.id}`}>Go to Ad</Link></Popup></Marker>)}
+                {ad.map((ad, i) => <Marker key={i} position={[ad.latitude, ad.longitude]}><Popup className='popup'><Link herf={`/ads/search/${ad.id}`}>Go to Ad</Link></Popup></Marker>)}
             </MapContainer>
         </div>
     </div>

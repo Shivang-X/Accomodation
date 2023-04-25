@@ -55,7 +55,7 @@ const Register = () => {
     <>
       <div className="login">
         <div className="left">
-          <Image src="/home.png" width="500" height="500"/>
+          <Image src="/home.png" alt="" width="500" height="500"/>
         </div>
         <div className="right">
           <form className="form" id='form' onSubmit = {submitHandler}>

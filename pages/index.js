@@ -31,10 +31,11 @@ export default function Home() {
                 <p className="line-head">Simple Listing Process</p>
                 <p className="line-desc">As an owner you can list your property in a few minutes. Just fill out our super simple form. Your property will go live.</p>
               </div>
-              <img src="/search.jpg"/>
+              {/* <img src="/search.jpg"/> */}
+              <Image src="/search.jpg" alt="search" width={330} height={210}/>
             </div>
             <div className="section">
-              <img src="/phonecall.jpg"/>
+              <Image src="/phonecall.jpg" alt="phonecall" width={330} height={210}/>   
               <div className="line">
                 <p className="line-head">Tenant Selects Property and Schedules an Appointment</p>
                 <p className="line-desc">If a tenant likes your property they will request on your contact details. Both parties will receive contact information and then arrange for a visit.</p>
@@ -45,7 +46,8 @@ export default function Home() {
                 <p className="line-head">Deal Closure</p>
                 <p className="line-desc">Owner and tenant meet to close the deal directly. HomeEasy can help create a rental agreement and deliver it to your doorstep.</p>
               </div>
-              <img src="/shakeHands.jpg"/>
+              {/* <img src="/shakeHands.jpg"/> */}
+              <Image src="/shakeHands.jpg" alt="shakeHands" width={330} height={210}/>
             </div>
         </div>
         <div className="find-post">
@@ -64,7 +66,7 @@ export default function Home() {
         </div>
         <div className="call">
           <FiPhoneCall style={{color: 'black', fontSize: '20px', marginRight: '7px'}}/>
-          <span>Give a missed call to XXX-XXX-XXXX to get help with your property listing</span>
+          <span>Give a missed call to 987-654-3210 to get help with your property listing</span>
         </div>
       </div>
     </>

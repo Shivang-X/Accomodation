@@ -83,12 +83,12 @@ const NewAd = ({ session }) => {
 
                 <select className="select-country" disabled={country=="" ? true : false} onChange={(e) => setState(e.target.value)}>
                     <option value="" disabled selected hidden> State </option>
-                    {state_arr.map(state => <option value={state}>{state}</option>)}
+                    {state_arr.map((state, i) => <option key={i} value={state}>{state}</option>)}
                 </select>
 
                 <select className="select-country" disabled={state=="" ? true : false} onChange={(e) => setCity(e.target.value)}>
                     <option value="" disabled selected hidden> City </option>
-                    {city_arr[state].split('|').map(city => <option value={city}>{city}</option>)}
+                    {city_arr[state].split('|').map((city, i) => <option key={i} value={city}>{city}</option>)}
                 </select>
             </div>
 
