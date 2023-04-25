@@ -58,13 +58,20 @@ export const register = (user) => async (dispatch) => {
 };
 
 //Update Profile
-export const updateProfile = (user) => async(dispatch) => {
+export const updateProfile = (user, id) => async(dispatch) => {
+
   try {
     dispatch({
       type: "UPDATE_PROFILE_REQUEST",
     });
 
-    const { data } = await axios.post("http://localhost:8000/profile/update", user, { withCredentials: true});
+    const headers = {
+      'Content-Type': 'application/json',
+    }
+    // const session = await getSession();
+    // console.log(session);
+    // const { data } = await axios.post("http://localhost:8000/profile/update", user, { withCredentials: true});
+    const { data } = await axios.post("http://localhost:3000/api/profile/update", {user, id}, { withCredentials: true});
     
     dispatch({
       type: "UPDATE_PROFILE_SUCCESS",
@@ -72,6 +79,7 @@ export const updateProfile = (user) => async(dispatch) => {
     });
 
   } catch (error) {
+    console.log(error)
     dispatch({
       type: "UPDATE_PROFILE_FAIL",
       payload: error.response.data.error,

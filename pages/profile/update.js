@@ -1,37 +1,43 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { updateProfile, loadUser } from '@/actions/userActions'
+import { updateProfile } from '@/actions/userActions'
 import { clearErrors } from '@/actions/adActions';
 import { FaUserAlt } from 'react-icons/fa';
 import { MdOutlineAlternateEmail } from 'react-icons/md';
 import { FiPhoneCall } from 'react-icons/fi';
 import { useRouter } from 'next/router'; 
+import { getSession } from "next-auth/react";
 
-const UpdateProfile = () => {
+const UpdateProfile = ({ session }) => {
 
     const dispatch = useDispatch();
     const router = useRouter();
     const [username, setUsername] = useState('');
+    const { user } = session;
+    console.log(session)
     const [contact, setContact] = useState(0);
-    const { user } = useSelector((state) => state.auth);
     const { isUpdated, error } = useSelector((state) => state.user);
+    
+    useEffect(() => {
+        if(session.status === 'unauthenticated') router.push({ pathname: "/"});
+    }, [session.status])
 
     useEffect(() => {
-        if (user) {
+        if (session.user) {
           setUsername(user.username);
           setContact(user.contact);
         }
     
         if (isUpdated) {
-          toast('User updated successfully');
-          dispatch(loadUser());
+          // toast('User updated successfully');
+        //   dispatch(loadUser());
 
-          router.push('/profile')
-    
-          dispatch({
-            type: "UPDATE_PROFILE_RESET",
-          });
+        
+        dispatch({
+          type: "UPDATE_PROFILE_RESET",
+        });
+        router.push('/profile')
         }
 
         if(error){
@@ -47,7 +53,7 @@ const UpdateProfile = () => {
     const submitHandler = (e) => {
         e.preventDefault();
         const data = {username, contact}
-        dispatch(updateProfile(data))
+        dispatch(updateProfile(data, user.id))
     }
     
     return (
@@ -77,6 +83,17 @@ const UpdateProfile = () => {
             </div>  
         </>
     )
+}
+
+export async function getServerSideProps(context) {
+
+    const session = await getSession(context)
+
+    return {
+      props: {
+        session
+      }, // will be passed to the page component as props
+    }
 }
 
 export default UpdateProfile

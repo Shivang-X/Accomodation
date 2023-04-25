@@ -30,7 +30,6 @@ export const getAd = ( _country, state , city ) => async (dispatch) => {
         dispatch({
             type: "ALL_ADS_REQUEST"
         })
-
         // const res = await axios.get(`http://localhost:8000/ads?country=${_country}&state=${state}&city=${city}`, { withCredentials: true })
         const res = await axios.get(`http://localhost:3000/api/ads?country=${_country}&state=${state}&city=${city}`, { withCredentials: true })
 
@@ -118,14 +117,13 @@ export const updateAd = (data) => async (dispatch) => {
 }
 
 //Post Ad
-export const postAd = (data, session) => async (dispatch) => {
-    console.log(data)
+export const postAd = (data, id) => async (dispatch) => {
     try {
         dispatch({
             type: "POST_ADS_REQUEST"
         })
         // const res = await axios.post("http://localhost:8000/postad", data, { withCredentials: true });
-        const res = await axios.post("http://localhost:3000/api/postad", {data, session} , { withCredentials: true });
+        const res = await axios.post("http://localhost:3000/api/postad", {data, id} , { withCredentials: true });
         // const res = await axios.post("http://localhost:3000/api/hello", {data, session}, { withCredentials: true });
 
         dispatch({

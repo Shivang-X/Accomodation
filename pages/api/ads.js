@@ -9,8 +9,7 @@ export default async function handler (req, res) {
     // console.log("dsg")
 
     const session = await getSession({req})
-	console.log(session)
-
+	
     const { country, state, city, id } = req.query;
 	if(country !== 'undefined' && country !== undefined){  
         const ads = await prisma.HouseAd.findMany({
@@ -20,6 +19,7 @@ export default async function handler (req, res) {
 				city
 	        }
 		})
+		console.log(req.query)
         await new Promise(resolve => setTimeout(resolve, 500));
 		res.status(200).json({
 			success: true,

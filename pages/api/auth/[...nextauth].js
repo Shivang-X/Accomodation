@@ -28,7 +28,16 @@ const authOptions = {
     ],
     secret: "THIS_IS_SECRET",
     callbacks: {
+        jwt: ({ token, user }) => {
+            if(user){
+                token.id = user.id
+            }
+            return token
+        },
         async session({session, token}){
+            if(token){
+                session.id = token.id
+            }
             const user = await prisma.user.findUnique({
                 where: {
                   email: token.email,
@@ -36,7 +45,12 @@ const authOptions = {
             });
             session.user = user
             return session
-        }
+        },
+        secret: "test",
+        // jwt: {
+        //     secret: "test",
+        //     encryption: true
+        // }
     },
     pages: {
         // signIn: '/auth/register',

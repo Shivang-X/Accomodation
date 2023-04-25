@@ -3,17 +3,15 @@ import { useDispatch } from "react-redux"
 import { state_arr, city_arr } from "./../utils/options";
 import { postAd } from '../actions/adActions';
 import MapCaller from '../components/Map'
-import { useSession } from "next-auth/react";
 import { getSession } from 'next-auth/react';
-// import SetLocation from '@/components/Map/SetLocation';
+import { toast } from "react-toastify";
+import { useRouter } from 'next/router'; 
+
 
 const NewAd = ({ session }) => {
 
     const dispatch = useDispatch();
-    // const session = useSession();
-    // console.log(session.data.user.email)
-    // document.documentElement.scrollTop = 0;
-
+    const router = useRouter();
     const [ad_title, setAd_title] = useState("");
     const [description, setDescription] = useState("");
     const [living_rooms, setLiving_rooms] = useState(0);
@@ -38,16 +36,16 @@ const NewAd = ({ session }) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        // console.log(latitude, longitude)
         const data = { ad_title, description, living_rooms, bed_rooms, bath_rooms, kitchens, country, state, city, addressL1, addressL2, pincode, latitude, longitude, price, contact};
-        // console.log(data)
-        dispatch(postAd(data, session));
+        dispatch(postAd(data, session.user.id));
+        router.push('/profile')
+        toast("Advert posted Successfully !")
+        
     }
 
   return (
     <>
       <div className="new-ad">
-        {/* <img src="images/clipart61513.png"/> */}
           <form className="form" onSubmit={submitHandler}>
             <h3>Post Advertisement</h3>
 
@@ -138,17 +136,6 @@ export async function getServerSideProps(context) {
         session
       }, // will be passed to the page component as props
     }
-  }
-
-// export const getServerSideProps = async (context) => {
-//     console.log("Heyy")
-//     const session = await getSession(context);
-//     console.log(session)
-//     return {
-//         props: {
-//             data: "Data"
-//         }
-//     }
-// }
+}
 
 export default NewAd

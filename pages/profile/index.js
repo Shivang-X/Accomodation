@@ -11,16 +11,18 @@ import { useRouter } from 'next/navigation';
 import useSWR from 'swr'
 import MapCaller from '@/components/Map';
 import { useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import { signOut } from 'next-auth/react'
 import { useEffect } from "react";
 
-const Profile = () => {
+const Profile = ({ session }) => {
 
     const dispatch = useDispatch();
     const router = useRouter();
-    const session = useSession();
+    // const session = useSession();
     useEffect(() => {
         if(session.status === 'unauthenticated') router.push({ pathname: "/"});
+        // if(session.status === 'loading') console.log("Loading");
     }, [session.status])
 
     const { loading: adloading, ads } = useSelector((state) => state.getads);
@@ -44,18 +46,16 @@ const Profile = () => {
                     {session.status === 'loading' ? (<Loader/>) : (
                         <form className="form">
                         <h3 className="heading">Profile</h3>
-                    
-                        {session.data && session.data.user ? (
+                        {session.user ? (
                             <>
-                                <div><FaUserAlt style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>{session.data.user.username}</div>
-                                <div><MdOutlineAlternateEmail style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>{session.data.user.email}</div>
-                                <div><FiPhoneCall style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>+91 {session.data.user.contact}</div>
+                                <div><FaUserAlt style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>{session.user.username}</div>
+                                <div><MdOutlineAlternateEmail style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>{session.user.email}</div>
+                                <div><FiPhoneCall style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>+91 {session.user.contact}</div>
                             </>
                             ) : (
                             <h3>Please Sign in first</h3>
                         )}
-
-                        <button onClick={() => router.push({ pathname: "profile/update" })}>Update</button>
+                        <button onClick={(e) => {e.preventDefault();router.push("/profile/update")}}>Update</button>
                         <button onClick={handleClick} className="logout-btn">Log out</button>
                     </form>
                     )} 
@@ -128,6 +128,17 @@ const Profile = () => {
         </div>     
         </div>
     )
+}
+
+export async function getServerSideProps(context) {
+
+    const session = await getSession(context)
+        
+    return {
+      props: {
+        session
+      }, // will be passed to the page component as props
+    }
 }
 
 export default Profile

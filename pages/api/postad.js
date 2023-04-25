@@ -1,18 +1,16 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-import { getSession } from 'next-auth/react'
 
 
 export default async function handler (req, res) {
 
-    // console.log("dsg")
+    // console.log(req.body.data)
 
     // const session = await getSession({req})
 
-    const { ad_title, description, living_rooms, bed_rooms, bath_rooms, kitchens, country, state, city, addressL1, addressL2, latitude, longitude, price, contact } = req.body.data;
-    const user = req.body.session.data.user
-
+    const { ad_title, description, living_rooms, bed_rooms, bath_rooms, kitchens, country, state, city, pincode, addressL1, addressL2, latitude, longitude, price, contact } = req.body.data;
+	console.log(pincode)
 	// const user = session.data.user;
 	const ad = await prisma.HouseAd.create({
 		data: {
@@ -25,13 +23,14 @@ export default async function handler (req, res) {
 			country,
 			state,
 			city,
+			pincode,
             addressL1,
             addressL2,
             latitude,
             longitude,
 			price,
 			contact,
-			ownerId: user.id
+			ownerId: req.body.id
 		}
 	})
 	console.log(ad);

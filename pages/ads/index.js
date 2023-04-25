@@ -5,7 +5,6 @@ import { FiPhoneCall } from 'react-icons/fi';
 import { state_arr, city_arr } from "../../utils/options";
 import { getAd, getAdbyId } from '../../actions/adActions';
 import { CardLoader } from '../../components/layout/Loader';
-import { useParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import Image from 'next/image'
 import useSWR from 'swr'
@@ -32,7 +31,6 @@ const Houses = () => {
     // const [state, setState] = useState(_state ? _state : "");
     // const [city, setCity] = useState(_city ? _city : "");
 
-    console.log(router.query)
 
     
     useEffect(() =>{
