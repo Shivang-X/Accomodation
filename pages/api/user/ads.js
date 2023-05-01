@@ -25,7 +25,7 @@ export default async function handler (req, res) {
             id: parseInt(req.query.id)
           }
         })
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // await new Promise(resolve => setTimeout(resolve, 500));
         res.status(200).json({
           success: true,
           ads
@@ -36,7 +36,7 @@ export default async function handler (req, res) {
             ownerId: parseInt(req.headers.abc)
           }
         })
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // await new Promise(resolve => setTimeout(resolve, 500));
         res.status(200).json({
           success: true,
           ads

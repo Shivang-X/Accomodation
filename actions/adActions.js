@@ -77,13 +77,15 @@ export const getUserAd = (session, id) => async (dispatch) => {
             type: "USER_ADS_REQUEST"
         })
 
-        console.log(session)
+        console.log(session, "Action")
 
         // const res = await axios.get(`http://localhost:8000/user/ads?id=${id}`, { withCredentials: true })
-        var config = {
-            headers: {"abc": session.user.id}
-        };
-        const res = await axios.get(`http://localhost:3000/api/user/ads?id=${id}`, config)
+        if(session.status === 'authenticated'){
+            var config = {
+                headers: {"abc": session.data.id}
+            };
+            const res = await axios.get(`http://localhost:3000/api/user/ads?id=${id}`, config)
+        }
 
         dispatch({
             type: "USER_ADS_SUCCESS",
