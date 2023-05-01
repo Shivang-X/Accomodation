@@ -1,4 +1,6 @@
 import axios from "axios";
+// import { getSession } from "next-auth/react";
+// const session = getSession();
 
 //Get all Ads
 export const getAds = () => async (dispatch) => {
@@ -69,14 +71,19 @@ export const getAdbyId = ( id ) => async (dispatch) => {
 }
 
 //Get user posted ads
-export const getUserAd = (id) => async (dispatch) => {
+export const getUserAd = (session, id) => async (dispatch) => {
     try{
         dispatch({
             type: "USER_ADS_REQUEST"
         })
 
+        console.log(session)
+
         // const res = await axios.get(`http://localhost:8000/user/ads?id=${id}`, { withCredentials: true })
-        const res = await axios.get(`http://localhost:3000/api/user/ads?id=${id}`, { withCredentials: true })
+        var config = {
+            headers: {"abc": session.user.id}
+        };
+        const res = await axios.get(`http://localhost:3000/api/user/ads?id=${id}`, config)
 
         dispatch({
             type: "USER_ADS_SUCCESS",

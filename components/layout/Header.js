@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 const Header = () => {
   const router = useRouter();
   const session = useSession();
-  console.log(session)
+  // console.log(session)
 
   return (
     <>

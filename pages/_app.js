@@ -8,6 +8,7 @@ import { loadUser } from "@/actions/userActions";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { SessionProvider } from "next-auth/react";
+// import { Auth } from "@/components/Auth.js"
 
 export default function App({ Component, pageProps }) {
 
@@ -19,9 +20,11 @@ export default function App({ Component, pageProps }) {
     <SessionProvider session={pageProps.session}>
     <Provider store={store}>
       <Header/>
+      {/* <Auth> */}
       <Component {...pageProps} />
+      {/* </Auth> */}
       <Footer/>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </Provider>
     </SessionProvider>
   );

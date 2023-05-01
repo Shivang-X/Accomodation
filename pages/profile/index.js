@@ -1,34 +1,37 @@
 import { useDispatch, useSelector } from "react-redux";
 import { GrLocation } from 'react-icons/gr';
 import { getUserAd } from '../../actions/adActions';
-import { logout } from "@/actions/userActions";
+// import { logout } from "@/actions/userActions";
 import { FaUserAlt } from 'react-icons/fa';
 import { MdOutlineAlternateEmail } from 'react-icons/md';
 import { FiPhoneCall } from 'react-icons/fi';
 import { Loader, CardLoader } from '@/components/layout/Loader';
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { useRouter } from 'next/navigation';
 import useSWR from 'swr'
 import MapCaller from '@/components/Map';
 import { useSession } from "next-auth/react";
 import { getSession } from "next-auth/react";
+// import { getServerSession } from "next-auth/next"
 import { signOut } from 'next-auth/react'
 import { useEffect } from "react";
 import Image from "next/image";
 
-const Profile = ({ session }) => {
+const Profile = () => {
 
     const dispatch = useDispatch();
     const router = useRouter();
-    // const session = useSession();
+    const session = useSession()
+    // console.log(session, "Profile")
     useEffect(() => {
-        if(session.status === 'unauthenticated') router.push({ pathname: "/"});
-        // if(session.status === 'loading') console.log("Loading");
+        // console.log(session, "Effect")
+        // if(session.status === 'unauthenticated') router.push({ pathname: "/"});
+        
+        if(session.status === 'loading') return <h1>Loading</h1>;
     }, [router, session.status])
 
     const { loading: adloading, ads } = useSelector((state) => state.getads);
-
-    const { data, error } = useSWR("Get Ads", () => dispatch(getUserAd()))
+    const { data, error } = useSWR("Get Ads", () => dispatch(getUserAd(session)))
 
     const handleClick = async (e) => {
         e.preventDefault();
@@ -47,11 +50,11 @@ const Profile = ({ session }) => {
                     {session.status === 'loading' ? (<Loader/>) : (
                         <form className="form">
                         <h3 className="heading">Profile</h3>
-                        {session.user ? (
+                        {session.data ? (
                             <>
-                                <div><FaUserAlt style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>{session.user.username}</div>
-                                <div><MdOutlineAlternateEmail style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>{session.user.email}</div>
-                                <div><FiPhoneCall style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>+91 {session.user.contact}</div>
+                                <div><FaUserAlt style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>{session.data.user.username}</div>
+                                <div><MdOutlineAlternateEmail style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>{session.data.user.email}</div>
+                                <div><FiPhoneCall style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>+91 {session.data.user.contact}</div>
                             </>
                             ) : (
                             <h3>Please Sign in first</h3>
@@ -78,7 +81,7 @@ const Profile = ({ session }) => {
                                     <div className="head">
                                         <div className="head-data">
                                             <span className="title">{ad.ad_title}</span>
-                                            <div class="section">
+                                            <div className="section">
                                                 <span className="city">{ad.city} - </span>
                                                 <span className="pincode">{ad.pincode} | </span>
                                                 <span className="createdAt">{ad.createdAt.substring(0,10)} |</span>
@@ -100,7 +103,6 @@ const Profile = ({ session }) => {
                                                         <MapCaller ad={[ad]} />
                                                         </div>			          		
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -128,12 +130,16 @@ const Profile = ({ session }) => {
         )}
         </div>     
         </div>
+        // <h1>H</h1>
     )
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps({req}) {
 
-    const session = await getSession(context)
+    const session = await getSession({req})
+
+    console.log(session, "Server side")
+
         
     return {
       props: {
