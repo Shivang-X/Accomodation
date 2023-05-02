@@ -17,7 +17,7 @@ const Header = () => {
             router.push("/");
           }}
         >
-          <Image src="/logo.png" width={50} height={50}></Image>
+          <Image src="/home.png" width={50} height={50}></Image>
           <span className="logo-name">Home-Easy</span>
         </div>
         <div className="nav">
