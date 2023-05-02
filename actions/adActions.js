@@ -33,7 +33,8 @@ export const getAd = ( _country, state , city ) => async (dispatch) => {
             type: "ALL_ADS_REQUEST"
         })
         // const res = await axios.get(`http://localhost:8000/ads?country=${_country}&state=${state}&city=${city}`, { withCredentials: true })
-        const res = await axios.get(`http://localhost:3000/api/ads?country=${_country}&state=${state}&city=${city}`, { withCredentials: true })
+        // const res = await axios.get(`http://localhost:3000/api/ads?country=${_country}&state=${state}&city=${city}`, { withCredentials: true })
+        const res = await axios.get(`https://homeasy.vercel.app/api/ads?country=${_country}&state=${state}&city=${city}`, { withCredentials: true })
 
         dispatch({
             type: "ALL_ADS_SUCCESS",
@@ -80,24 +81,27 @@ export const getUserAd = (session, id) => async (dispatch) => {
         console.log(session, "Action")
 
         // const res = await axios.get(`http://localhost:8000/user/ads?id=${id}`, { withCredentials: true })
-        if(session.status === 'authenticated'){
+        // if(session.status === 'authenticated'){
             var config = {
                 headers: {"abc": session.data.id}
             };
-            const res = await axios.get(`http://localhost:3000/api/user/ads?id=${id}`, config)
-        }
+            // const res = await axios.get(`http://localhost:3000/api/user/ads?id=${id}`, config)
+            const res = await axios.get(`https://homeasy.vercel.app/api/user/ads?id=${id}`, config)
+        // }
+        // const res = {data: {ads: []}}
 
         dispatch({
             type: "USER_ADS_SUCCESS",
             payload: res.data.ads
         })
 
-        return res
+        // return res
 
     }catch(error){
+        console.log(error)
         dispatch({
             type: "USER_ADS_FAIL",
-            payload: error.response.data.error
+            payload: error.response
         })
     }
 }

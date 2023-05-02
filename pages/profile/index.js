@@ -23,12 +23,14 @@ const Profile = () => {
     const router = useRouter();
     const session = useSession()
     // console.log(session, "Profile")
-    // useEffect(() => {
-    //     // console.log(session, "Effect")
-    //     // if(session.status === 'unauthenticated') router.push({ pathname: "/"});
+    useEffect(() => {
+        // console.log(session, "Effect")
+        // if(session.status === 'unauthenticated') router.push({ pathname: "/"});
         
-    //     if(session.status === 'loading') return <h1>Loading</h1>;
-    // }, [router, session.status])
+        // if(session.status === 'loading') return <h1>Loading</h1>;
+        // else {dispatch(getUserAd(session))}
+        dispatch(getUserAd(session))
+    }, [session.status])
 
     const { loading: adloading, ads } = useSelector((state) => state.getads);
     const { data, error } = useSWR("Get Ads", () => dispatch(getUserAd(session)))
