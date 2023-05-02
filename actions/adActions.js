@@ -33,7 +33,7 @@ export const getAd = ( _country, state , city ) => async (dispatch) => {
             type: "ALL_ADS_REQUEST"
         })
         // const res = await axios.get(`http://localhost:8000/ads?country=${_country}&state=${state}&city=${city}`, { withCredentials: true })
-        const res = await axios.get(`http://localhost:3000/api/ads?country=${_country}&state=${state}&city=${city}`, { withCredentials: true })
+        const res = await axios.get(`https://homeasy.vercel.app/api/ads?country=${_country}&state=${state}&city=${city}`, { withCredentials: true })
 
         dispatch({
             type: "ALL_ADS_SUCCESS",
