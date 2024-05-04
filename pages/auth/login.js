@@ -41,6 +41,7 @@ const Login = () => {
           password,
           redirect: false
         })
+        console.log(res);
         router.push({ pathname: '/' })
     }
 

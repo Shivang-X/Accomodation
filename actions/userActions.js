@@ -6,8 +6,7 @@ export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: "LOGIN_USER_REQUEST" });
 
-    // const { data } = await axios.post("http://localhost:8000/auth/login", { email, password }, { withCredentials: true});
-    const { data } = await axios.post("http://localhost:3000/api/auth/login", { email, password }, { withCredentials: true});
+    const { data } = await axios.post("http://localhost:8080/api/v1/auth/login", { email, password }, { withCredentials: true});
 
     if (data.success) {
       dispatch({
@@ -35,13 +34,11 @@ export const register = (user) => async (dispatch) => {
       type: "REGISTER_USER_REQUEST",
     });
 
-    // const { data } = await axios.post("http://localhost:8000/auth/register", user, { withCredentials: true});
-    const { data } = await axios.post("http://localhost:3000/api/auth/register", user, { withCredentials: true});
-    await signIn('credentials', {
-      email: data.user.email,
-      password: data.user.password,
-      redirect: false
-    })
+    console.log(user);
+
+    const { data } = await axios.post("http://localhost:8080/api/v1/auth/register", user);
+
+    
 
       dispatch({
         type: "REGISTER_USER_SUCCESS",

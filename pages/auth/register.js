@@ -14,9 +14,10 @@ const Register = () => {
 
     const dispatch = useDispatch();
 
-    const [username, setUsername] = useState();
+    const [firstName, setFirstname] = useState();
+    const [lastName, setLastname] = useState();
     const [email, setEmail] = useState();
-    const [contact, setContact] = useState(0);
+    const [mobileNumber, setMobileNumber] = useState(0);
     const [password, setPassword] = useState('');
     const [confirmpassword, setConfirmpassword] = useState('');
 
@@ -42,7 +43,7 @@ const Register = () => {
       document.getElementById('form').classList.remove('red-border');
       document.getElementById('email').classList.remove('red-border');
       if(password === confirmpassword && password !== '') {
-          const user = {username, email, contact, password}
+          const user = {firstName, lastName, email, mobileNumber, password}
           dispatch(register(user))
       }else{
           document.getElementById('password').classList.add('red-border');
@@ -62,18 +63,20 @@ const Register = () => {
             <h3>Register Here</h3>
             <div className="container">
               <div className="section">
-                <label for="username">Username</label>
-                <input type="text" id="username" onChange = {(e) => setUsername(e.target.value)}/>
+                <label for="username">Firstname</label>
+                <input type="text" id="firstname" onChange = {(e) => setFirstname(e.target.value)}/>
               </div>
               <div className="section">
-                <label for="username">Contact</label>
-                <input type="number" id="contact" onChange = {(e) => setContact(parseInt(e.target.value))}/>
-                {/* <input type="number" id="contact" onChange = {(e) => console.log(typeof e.target.value)}/> */}
+                <label for="username">Lastname</label>
+                <input type="text" id="lastname" onChange = {(e) => setLastname(e.target.value)}/>
               </div>
             </div>
 
             <label for="Email">Email</label>
             <input type="email" id="email" onChange = {(e) => setEmail(e.target.value)}/>
+
+            <label for="username">Contact</label>
+            <input type="number" id="contact" onChange = {(e) => setMobileNumber(parseInt(e.target.value))}/>
 
             <div className="container">
               <div className="section">
