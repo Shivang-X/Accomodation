@@ -3,10 +3,9 @@ import { useDispatch, useSelector } from "react-redux"
 import Link from 'next/link'
 import Image from 'next/image'
 import { toast } from "react-toastify";
-import { clearErrors, register } from '../../actions/userActions'
+import { clearErrors, register } from '../../src/actions/userActions'
 import { useSession } from 'next-auth/react'
 import { router } from 'next/router'
-import { signIn } from 'next-auth/react'
 
 const Register = () => {
 
@@ -37,8 +36,7 @@ const Register = () => {
       } 
     }, [dispatch, session.status , error]);
 
-    const submitHandler = async (e) => {
-      e.preventDefault();
+    const removeErrorLayout = () => {
       document.getElementById('password').classList.remove('red-border');
       document.getElementById('cpassword').classList.remove('red-border');
       document.getElementById('form').classList.remove('red-border');
@@ -46,28 +44,43 @@ const Register = () => {
       document.getElementById('firstName').classList.remove('red-border');
       document.getElementById('lastName').classList.remove('red-border');
       document.getElementById('mobileNumber').classList.remove('red-border');
+}
 
-      if(firstName == ''){
-        document.getElementById('firstName').classList.add('red-border');
-        toast.error('Please enter First name !!');
-      }else if(lastName == ''){
-        document.getElementById('lastName').classList.add('red-border');
-        toast.error('Please enter Last name !!');
-      }else if(email == ''){
-        document.getElementById('email').classList.add('red-border');
-        toast.error('Please enter email !!');
-      }else if(isNaN(mobileNumber)){
-        document.getElementById('mobileNumber').classList.add('red-border');
-        toast.error('Please enter mobile number !!');
-      }else if(password == ''){
-        document.getElementById('password').classList.add('red-border');
-        toast.error('Please enter password !!')
-      }else if(password !== confirmpassword){
-          document.getElementById('password').classList.add('red-border');
-          document.getElementById('cpassword').classList.add('red-border');
-          toast.error("Passwords do not match !!")
-      }
-      else{
+const isValidationPassed = () => {
+  console.log(mobileNumber)
+  if(firstName == '' || firstName == undefined){
+    document.getElementById('firstName').classList.add('red-border');
+    toast.error('Please enter First name !!');
+    return false;
+  }else if(lastName == '' || lastName == undefined){
+    document.getElementById('lastName').classList.add('red-border');
+    toast.error('Please enter Last name !!');
+    return false;
+  }else if(email == '' || email == undefined){
+    document.getElementById('email').classList.add('red-border');
+    toast.error('Please enter email !!');
+    return false;
+  }else if(isNaN(mobileNumber) || mobileNumber == undefined || mobileNumber == 0){
+    document.getElementById('mobileNumber').classList.add('red-border');
+    toast.error('Please enter mobile number !!');
+    return false;
+  }else if(password == '' || password == undefined){
+    document.getElementById('password').classList.add('red-border');
+    toast.error('Please enter password !!')
+    return false;
+  }else if(password !== confirmpassword){
+      document.getElementById('password').classList.add('red-border');
+      document.getElementById('cpassword').classList.add('red-border');
+      toast.error("Passwords do not match !!")
+      return false;
+  }
+  return true;
+}
+
+    const submitHandler = async (e) => {
+      e.preventDefault();
+      removeErrorLayout();
+      if(isValidationPassed()){
         const user = {firstName, lastName, email, mobileNumber, password};
         console.log(user);
         dispatch(register(user))

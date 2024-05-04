@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import { state_arr, city_arr } from "@/utils/options";
-import { getUserAd, updateAd, clearErrors } from '@/actions/adActions';
+import { state_arr, city_arr } from "@/src/utils/options";
+import { getUserAd, updateAd, clearErrors } from '@/src/actions/adActions';
 import MapCaller from '@/components/Map'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'

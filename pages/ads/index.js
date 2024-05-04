@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { GrLocation } from 'react-icons/gr';
 import { FiPhoneCall } from 'react-icons/fi';
-import { state_arr, city_arr } from "../../utils/options";
-import { getAd, getAdbyId } from '../../actions/adActions';
+import { state_arr, city_arr } from "../../src/utils/options";
+import { getAd, getAdbyId } from '../../src/actions/adActions';
 import { CardLoader } from '../../components/layout/Loader';
 import { useRouter } from 'next/router';
 import Image from 'next/image'

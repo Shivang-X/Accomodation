@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { GrLocation } from 'react-icons/gr';
-import { getUserAd } from '../../actions/adActions';
+import { getUserAd } from '../../src/actions/adActions';
 // import { logout } from "@/actions/userActions";
 import { FaUserAlt } from 'react-icons/fa';
 import { MdOutlineAlternateEmail } from 'react-icons/md';

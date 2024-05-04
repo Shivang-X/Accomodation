@@ -4,13 +4,9 @@ import { toast } from "react-toastify";
 import Link from "next/link"
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
-import { clearErrors, login } from '../../actions/userActions'
-import { useSession } from "next-auth/react";
-import { signIn, signOut } from 'next-auth/react'
+import { clearErrors, login } from '../../src/actions/userActions'
 
 const Login = () => {
-    // const session = useSession();
-    // console.log(session)
   
     const dispatch = useDispatch();
     const router = useRouter();
@@ -22,9 +18,7 @@ const Login = () => {
 
     useEffect(() => {
       if(isAuthenticated){
-        // toast(`Hello ${user} !`)
-        console.log(user)
-        router.push("/");
+        router.push({ pathname: '/' })
       }
       if(error){
         toast.error(error);
@@ -36,9 +30,18 @@ const Login = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        const user = {email, password}
-        dispatch(login(user));
-        router.push({ pathname: '/' })
+        document.getElementById('email').classList.remove('red-border');
+        document.getElementById('password').classList.remove('red-border');
+        if(email == ''){
+          document.getElementById('email').classList.add('red-border');
+          toast.error('Please enter Email !!');
+        }else if(password == ''){
+          document.getElementById('password').classList.add('red-border');
+          toast.error('Please enter password !!')
+        }else{
+          const user = {email, password}
+          dispatch(login(user));
+        }
     }
 
   return (

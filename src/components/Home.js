@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { state_arr, city_arr } from "./../utils/options";
+import { state_arr, city_arr } from "../src/utils/options";
 import { useNavigate } from "react-router-dom";
 import { FiPhoneCall } from 'react-icons/fi';
 

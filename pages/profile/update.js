@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { updateProfile } from '@/actions/userActions'
-import { clearErrors } from '@/actions/adActions';
+import { updateProfile } from '@/src/actions/userActions'
+import { clearErrors } from '@/src/actions/adActions';
 import { FaUserAlt } from 'react-icons/fa';
 import { MdOutlineAlternateEmail } from 'react-icons/md';
 import { FiPhoneCall } from 'react-icons/fi';

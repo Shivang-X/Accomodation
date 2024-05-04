@@ -1,8 +1,7 @@
+import request from "@/src/utils/axios-config";
 import axios from "axios";
-import { signIn } from 'next-auth/react'
 
-const baseUrl = "http://localhost:8080/api/v1";
-
+  
 //Login
 export const login = (user) => async (dispatch) => {
   try {
@@ -10,23 +9,20 @@ export const login = (user) => async (dispatch) => {
 
     console.log(user)
 
-    const { data } = await axios.post(`${baseUrl}auth/login`, user);
+    const { data } = await request.post(`auth/login`, user);
 
-    if (data.success) {
       dispatch({
         type: "LOGIN_USER_SUCCESS",
         payload: data.user,
       });
-    } else {
-      dispatch({
-        type: "LOGIN_USER_FAIL",
-        payload: data.error,
-      });
-    }
+
+      localStorage.setItem("accessToken", data.accessToken);
+
+
   } catch (error) {
     dispatch({
       type: "LOGIN_USER_FAIL",
-      payload: error.response.data.error,
+      payload: error.response.data.message,
     });
   }
 };
@@ -38,16 +34,14 @@ export const register = (user) => async (dispatch) => {
       type: "REGISTER_USER_REQUEST",
     });
 
-    console.log(user);
-
-    const { data } = await axios.post(`${baseUrl}/auth/register`, user);
-
+    const { data } = await request.post(`auth/register`, user);
 
       dispatch({
         type: "REGISTER_USER_SUCCESS",
         payload: data.user,
       });
-
+      
+      localStorage.setItem("accessToken", data.accessToken);
 
   } catch (error) {
     dispatch({
@@ -92,7 +86,9 @@ export const loadUser = () => async (dispatch) => {
       type: "LOAD_USER_REQUEST"
     })
 
-    const { data } = await axios.get("http://localhost:8000/me", { withCredentials: true})
+    // const { data } = await axios.get(`${baseUrl}/me`);
+
+    const {data} = await request.get(`/me`);
 
     dispatch({
       type: "LOAD_USER_SUCCESS",

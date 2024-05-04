@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useDispatch } from "react-redux"
-import { state_arr, city_arr } from "./../utils/options";
-import { postAd } from '../actions/adActions';
+import { state_arr, city_arr } from "../src/utils/options";
+import { postAd } from '../src/actions/adActions';
 import MapCaller from '../components/Map'
 import { getSession } from 'next-auth/react';
 import { toast } from "react-toastify";

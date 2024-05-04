@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import 'leaflet/dist/leaflet.css'
-import { getAd } from '../actions/adActions';
+import { getAd } from '../src/actions/adActions';
 import MapCaller from '../components/Map'
 import { useRouter } from 'next/navigation';
 
