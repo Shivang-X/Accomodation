@@ -1,12 +1,16 @@
 import axios from "axios";
 import { signIn } from 'next-auth/react'
 
+const baseUrl = "http://localhost:8080/api/v1";
+
 //Login
-export const login = (email, password) => async (dispatch) => {
+export const login = (user) => async (dispatch) => {
   try {
     dispatch({ type: "LOGIN_USER_REQUEST" });
 
-    const { data } = await axios.post("http://localhost:8080/api/v1/auth/login", { email, password }, { withCredentials: true});
+    console.log(user)
+
+    const { data } = await axios.post(`${baseUrl}auth/login`, user);
 
     if (data.success) {
       dispatch({
@@ -36,7 +40,7 @@ export const register = (user) => async (dispatch) => {
 
     console.log(user);
 
-    const { data } = await axios.post("http://localhost:8080/api/v1/auth/register", user);
+    const { data } = await axios.post(`${baseUrl}/auth/register`, user);
 
     
 
@@ -65,11 +69,8 @@ export const updateProfile = (user, id) => async(dispatch) => {
     const headers = {
       'Content-Type': 'application/json',
     }
-    // const session = await getSession();
-    // console.log(session);
-    // const { data } = await axios.post("http://localhost:8000/profile/update", user, { withCredentials: true});
-    const { data } = await axios.post("http://localhost:3000/api/profile/update", {user, id}, { withCredentials: true});
-    // const { data } = await axios.post("http://localhost:3000/api/hello", {user, id}, { withCredentials: true});
+
+    const { data } = await axios.post(`${basrUrl}profile/update`, {user, id}, { withCredentials: true});
     
     dispatch({
       type: "UPDATE_PROFILE_SUCCESS",

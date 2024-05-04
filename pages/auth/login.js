@@ -36,12 +36,8 @@ const Login = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        const res = await signIn('credentials', {
-          email,
-          password,
-          redirect: false
-        })
-        console.log(res);
+        const user = {email, password}
+        dispatch(login(user));
         router.push({ pathname: '/' })
     }
 
