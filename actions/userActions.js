@@ -42,7 +42,6 @@ export const register = (user) => async (dispatch) => {
 
     const { data } = await axios.post(`${baseUrl}/auth/register`, user);
 
-    
 
       dispatch({
         type: "REGISTER_USER_SUCCESS",
@@ -53,7 +52,7 @@ export const register = (user) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "REGISTER_USER_FAIL",
-      payload: error.response.data.error,
+      payload: error.response.data.message,
     });
   }
 };

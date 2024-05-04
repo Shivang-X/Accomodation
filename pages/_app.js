@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }) {
       <Component {...pageProps} />
       {/* </Auth> */}
       <Footer/>
-      {/* <ToastContainer /> */}
+      <ToastContainer />
     </Provider>
     </SessionProvider>
   );

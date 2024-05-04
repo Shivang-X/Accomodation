@@ -29,8 +29,9 @@ const Register = () => {
       }
   
       if(error){
+        console.log(error);
         toast.error(error);
-        if(error === 'Email already registered !') document.getElementById('email').classList.add('red-border');
+        if(error === 'User already exists !!') document.getElementById('email').classList.add('red-border');
         else document.getElementById('form').classList.add('red-border');
         dispatch(clearErrors())
       } 
@@ -42,13 +43,34 @@ const Register = () => {
       document.getElementById('cpassword').classList.remove('red-border');
       document.getElementById('form').classList.remove('red-border');
       document.getElementById('email').classList.remove('red-border');
-      if(password === confirmpassword && password !== '') {
-          const user = {firstName, lastName, email, mobileNumber, password}
-          dispatch(register(user))
-      }else{
+      document.getElementById('firstName').classList.remove('red-border');
+      document.getElementById('lastName').classList.remove('red-border');
+      document.getElementById('mobileNumber').classList.remove('red-border');
+
+      if(firstName == ''){
+        document.getElementById('firstName').classList.add('red-border');
+        toast.error('Please enter First name !!');
+      }else if(lastName == ''){
+        document.getElementById('lastName').classList.add('red-border');
+        toast.error('Please enter Last name !!');
+      }else if(email == ''){
+        document.getElementById('email').classList.add('red-border');
+        toast.error('Please enter email !!');
+      }else if(isNaN(mobileNumber)){
+        document.getElementById('mobileNumber').classList.add('red-border');
+        toast.error('Please enter mobile number !!');
+      }else if(password == ''){
+        document.getElementById('password').classList.add('red-border');
+        toast.error('Please enter password !!')
+      }else if(password !== confirmpassword){
           document.getElementById('password').classList.add('red-border');
           document.getElementById('cpassword').classList.add('red-border');
-          toast.error("Passwords do not match")
+          toast.error("Passwords do not match !!")
+      }
+      else{
+        const user = {firstName, lastName, email, mobileNumber, password};
+        console.log(user);
+        dispatch(register(user))
       }
     }
 
@@ -64,11 +86,11 @@ const Register = () => {
             <div className="container">
               <div className="section">
                 <label for="username">Firstname</label>
-                <input type="text" id="firstname" onChange = {(e) => setFirstname(e.target.value)}/>
+                <input type="text" id="firstName" onChange = {(e) => setFirstname(e.target.value)}/>
               </div>
               <div className="section">
                 <label for="username">Lastname</label>
-                <input type="text" id="lastname" onChange = {(e) => setLastname(e.target.value)}/>
+                <input type="text" id="lastName" onChange = {(e) => setLastname(e.target.value)}/>
               </div>
             </div>
 
@@ -76,7 +98,7 @@ const Register = () => {
             <input type="email" id="email" onChange = {(e) => setEmail(e.target.value)}/>
 
             <label for="username">Contact</label>
-            <input type="number" id="contact" onChange = {(e) => setMobileNumber(parseInt(e.target.value))}/>
+            <input type="number" id="mobileNumber" onChange = {(e) => setMobileNumber(parseInt(e.target.value))}/>
 
             <div className="container">
               <div className="section">
