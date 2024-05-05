@@ -5,41 +5,39 @@ import { getUserAd } from '../../src/actions/adActions';
 import { FaUserAlt } from 'react-icons/fa';
 import { MdOutlineAlternateEmail } from 'react-icons/md';
 import { FiPhoneCall } from 'react-icons/fi';
-import { Loader, CardLoader } from '@/components/layout/Loader';
-// import { toast } from "react-toastify";
+import { Loader, CardLoader } from '@/src/components/layout/Loader';
+import { toast } from "react-toastify";
 import { useRouter } from 'next/navigation';
 import useSWR from 'swr'
-import MapCaller from '@/components/Map';
+import MapCaller from '@/src/components/Map';
 import { useSession } from "next-auth/react";
-import { getSession } from "next-auth/react";
-// import { getServerSession } from "next-auth/next"
-import { signOut } from 'next-auth/react'
 import { useEffect } from "react";
 import Image from "next/image";
+import { logout } from "@/src/actions/userActions";
 
 const Profile = () => {
 
     const dispatch = useDispatch();
     const router = useRouter();
     const session = useSession()
-    // console.log(session, "Profile")
+
+    const { isAuthenticated, user, loading, errors } = useSelector(state => state.auth)
+
     useEffect(() => {
-        // console.log(session, "Effect")
-        // if(session.status === 'unauthenticated') router.push({ pathname: "/"});
-        
-        // if(session.status === 'loading') return <h1>Loading</h1>;
-        // else {dispatch(getUserAd(session))}
+        if (!isAuthenticated) {
+            router.push('/')
+          }
         dispatch(getUserAd(session))
-    }, [session.status])
+    }, [isAuthenticated])
 
     const { loading: adloading, ads } = useSelector((state) => state.getads);
     const { data, error } = useSWR("Get Ads", () => dispatch(getUserAd(session)))
 
-    const handleClick = async (e) => {
+    const handleLogout = async (e) => {
         e.preventDefault();
-        const res = await signOut({ redirect: false });
+        dispatch(logout())
         router.push({ pathname: "/"});
-        // toast('Logout out Successfully !')
+        toast.success('Logged out Successfully !')
     }
     
     return (
@@ -49,20 +47,20 @@ const Profile = () => {
                     <Image src="/home.png" alt="" width="500" height="500"/>
                 </div>
                 <div className="right">
-                    {session.status === 'loading' ? (<Loader/>) : (
+                    {loading ? (<Loader/>) : (
                         <form className="form">
                         <h3 className="heading">Profile</h3>
-                        {session.data ? (
+                        {user !== undefined ? (
                             <>
-                                <div><FaUserAlt style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>{session.data.user.username}</div>
-                                <div><MdOutlineAlternateEmail style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>{session.data.user.email}</div>
-                                <div><FiPhoneCall style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>+91 {session.data.user.contact}</div>
+                                <div><FaUserAlt style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>{user?.firstName} {user?.lastName}</div>
+                                <div><MdOutlineAlternateEmail style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>{user?.email}</div>
+                                <div><FiPhoneCall style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/>+91 {user?.mobileNumber}</div>
                             </>
                             ) : (
                             <h3>Please Sign in first</h3>
                         )}
                         <button onClick={(e) => {e.preventDefault();router.push("/profile/update")}}>Update</button>
-                        <button onClick={handleClick} className="logout-btn">Log out</button>
+                        <button onClick={handleLogout} className="logout-btn">Log out</button>
                     </form>
                     )} 
                 </div>

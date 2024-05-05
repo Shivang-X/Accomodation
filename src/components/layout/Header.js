@@ -2,11 +2,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { useSession } from "next-auth/react";
+import { useSelector } from "react-redux"
+
 
 const Header = () => {
   const router = useRouter();
   const session = useSession();
-  // console.log(session)
+  
+  const { isAuthenticated, user } = useSelector(state => state.auth)
+  console.log(user?.firstName)
 
   return (
     <>
@@ -28,10 +32,10 @@ const Header = () => {
             <li className="nav-items">
               <Link href="/maps">Map</Link>
             </li>
-            {session.status === 'authenticated' ? (
+            {isAuthenticated ? (
               <>
                 <li className="nav-items">
-                  <Link href="/profile">{session.data.user.username}</Link>
+                  <Link href="/profile">{user?.firstName}</Link>
                 </li>
               </>
             ) : (

@@ -4,11 +4,11 @@ import { GrLocation } from 'react-icons/gr';
 import { FiPhoneCall } from 'react-icons/fi';
 import { state_arr, city_arr } from "../../src/utils/options";
 import { getAd, getAdbyId } from '../../src/actions/adActions';
-import { CardLoader } from '../../components/layout/Loader';
+import { CardLoader } from '@/src/components/layout/Loader';
 import { useRouter } from 'next/router';
 import Image from 'next/image'
 import useSWR from 'swr'
-import MapCaller from '@/components/Map';
+import MapCaller from '@/src/components/Map';
 
 
 const Houses = () => {

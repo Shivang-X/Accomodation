@@ -111,15 +111,16 @@ export const logout = () => async (dispatch) => {
       type: "LOGOUT_REQUEST"
     })
 
-    await axios.get("http://localhost:8000/logout", {withCredentials: true})
+    localStorage.removeItem("accessToken")
 
     dispatch({
       type: "LOGOUT_SUCCESS"
     })
+    
   } catch (error) {
     dispatch({
       type: "LOGOUT_FAIL",
-      payload: error.response.data.error
+      payload: "Logout request failed"
     })
   }
 }

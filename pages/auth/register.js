@@ -23,7 +23,7 @@ const Register = () => {
     const { isAuthenticated, error } = useSelector(state => state.auth)
 
     useEffect(() => {
-      if (session.status === 'authenticated') {
+      if (isAuthenticated) {
         router.push('/')
       }
   
