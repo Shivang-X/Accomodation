@@ -52,22 +52,20 @@ export const register = (user) => async (dispatch) => {
 };
 
 //Update Profile
-export const updateProfile = (user, id) => async(dispatch) => {
+export const updateProfile = (user) => async(dispatch) => {
 
   try {
     dispatch({
       type: "UPDATE_PROFILE_REQUEST",
     });
 
-    const headers = {
-      'Content-Type': 'application/json',
-    }
+    console.log(user)
 
-    const { data } = await axios.post(`${basrUrl}profile/update`, {user, id}, { withCredentials: true});
+    const { data } = await request.post(`user/profile/update`, user);
     
     dispatch({
       type: "UPDATE_PROFILE_SUCCESS",
-      payload: data.success,
+      payload: true,
     });
 
   } catch (error) {
@@ -86,9 +84,7 @@ export const loadUser = () => async (dispatch) => {
       type: "LOAD_USER_REQUEST"
     })
 
-    // const { data } = await axios.get(`${baseUrl}/me`);
-
-    const {data} = await request.get(`/me`);
+    const {data} = await request.get(`/user/profile`);
 
     dispatch({
       type: "LOAD_USER_SUCCESS",
@@ -96,7 +92,6 @@ export const loadUser = () => async (dispatch) => {
     })
 
   }catch(error){
-    console.log(error)
     dispatch({
       type: "LOAD_USER_FAIL",
       payload: error.response.data.error
@@ -116,7 +111,7 @@ export const logout = () => async (dispatch) => {
     dispatch({
       type: "LOGOUT_SUCCESS"
     })
-    
+
   } catch (error) {
     dispatch({
       type: "LOGOUT_FAIL",

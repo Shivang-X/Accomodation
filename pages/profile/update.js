@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { updateProfile } from '@/src/actions/userActions'
+import { loadUser, updateProfile } from '@/src/actions/userActions'
 import { clearErrors } from '@/src/actions/adActions';
 import { FaUserAlt } from 'react-icons/fa';
 import { MdOutlineAlternateEmail } from 'react-icons/md';
@@ -10,29 +10,33 @@ import { useRouter } from 'next/router';
 import { getSession } from "next-auth/react";
 import Image from 'next/image';
 
-const UpdateProfile = ({ session }) => {
+const UpdateProfile = () => {
 
     const dispatch = useDispatch();
     const router = useRouter();
-    const [username, setUsername] = useState('');
-    const { user } = session;
-    console.log(session)
-    const [contact, setContact] = useState(0);
+    const [firstName, setFirstname] = useState('');
+    const [lastName, setLastname] = useState('');
+    const [email, setEmail] = useState('');
+    // const { user } = session;
+    const [mobileNumber, setMobileNumber] = useState(0);
     const { isUpdated, error } = useSelector((state) => state.user);
+    const { isAuthenticated, user, loading, errors } = useSelector(state => state.auth);
     
     useEffect(() => {
-        if(session.status === 'unauthenticated') router.push({ pathname: "/"});
-    }, [router, session.status])
+        if(!isAuthenticated) router.push({ pathname: "/"});
+    }, [router, isAuthenticated])
 
     useEffect(() => {
-        if (session.user) {
-          setUsername(user.username);
-          setContact(user.contact);
+        if (user) {
+          setFirstname(user.firstName);
+          setLastname(user.lastName);
+          setMobileNumber(user.mobileNumber);
+          setEmail(user.email);
         }
     
         if (isUpdated) {
-          // toast('User updated successfully');
-        //   dispatch(loadUser());
+          toast('User updated successfully');
+          dispatch(loadUser());
 
         
         dispatch({
@@ -45,7 +49,7 @@ const UpdateProfile = ({ session }) => {
             toast(error)
             dispatch(clearErrors())
         }
-    }, [dispatch, router, session.user, isUpdated, user, error]);
+    }, [dispatch, router, user, isUpdated, user, error]);
 
     const handleClick = () => {
         router.push('/profile')
@@ -53,8 +57,9 @@ const UpdateProfile = ({ session }) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        const data = {username, contact}
-        dispatch(updateProfile(data, user.id))
+        const data = { firstName, lastName, email, mobileNumber };
+        console.log(data);
+        dispatch(updateProfile(data))
     }
     
     return (
@@ -69,9 +74,9 @@ const UpdateProfile = ({ session }) => {
              
                 {user ? (
                     <>
-                        <div className="fields"><FaUserAlt style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/><input type="text" id="username" value={username} onChange = {(e) => setUsername(e.target.value)}/></div>
-                        <div className="fields"><MdOutlineAlternateEmail style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/><input value={user.email} disabled/></div>
-                        <div className="fields"><FiPhoneCall style={{color: 'black', fontSize: '25px', marginRight: '13px'}}/><input type="number" value={contact} onChange = {(e) => setContact(parseInt(e.target.value))}/></div>
+                        <div className="fields"><div>First name :<input type="text" id="username" value={firstName} onChange = {(e) => setFirstname(e.target.value)}/></div><div>Last name :<input type="text" id="username" value={lastName} onChange = {(e) => setLastname(e.target.value)}/></div> </div>
+                        <div className="fields"><div>Email :<input value={user.email} disabled/></div></div>
+                        <div className="fields"><div>Mobile number :<input type="number" value={mobileNumber} onChange = {(e) => setMobileNumber(parseInt(e.target.value))}/></div></div>
                     </>
                     ) : (
                     <h3>Please Sign in first</h3>
@@ -84,17 +89,6 @@ const UpdateProfile = ({ session }) => {
             </div>  
         </>
     )
-}
-
-export async function getServerSideProps(context) {
-
-    const session = await getSession(context)
-
-    return {
-      props: {
-        session
-      }, // will be passed to the page component as props
-    }
 }
 
 export default UpdateProfile

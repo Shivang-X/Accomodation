@@ -40,6 +40,7 @@ const Login = () => {
           toast.error('Please enter password !!')
         }else{
           const user = {email, password}
+          console.log(user);
           dispatch(login(user));
         }
     }

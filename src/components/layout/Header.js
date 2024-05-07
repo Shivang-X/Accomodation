@@ -10,7 +10,6 @@ const Header = () => {
   const session = useSession();
   
   const { isAuthenticated, user } = useSelector(state => state.auth)
-  console.log(user?.firstName)
 
   return (
     <>

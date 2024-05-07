@@ -47,28 +47,33 @@ const Register = () => {
 }
 
 const isValidationPassed = () => {
-  console.log(mobileNumber)
   if(firstName == '' || firstName == undefined){
     document.getElementById('firstName').classList.add('red-border');
     toast.error('Please enter First name !!');
     return false;
+
   }else if(lastName == '' || lastName == undefined){
+
     document.getElementById('lastName').classList.add('red-border');
     toast.error('Please enter Last name !!');
     return false;
   }else if(email == '' || email == undefined){
+
     document.getElementById('email').classList.add('red-border');
     toast.error('Please enter email !!');
     return false;
   }else if(isNaN(mobileNumber) || mobileNumber == undefined || mobileNumber == 0){
+
     document.getElementById('mobileNumber').classList.add('red-border');
     toast.error('Please enter mobile number !!');
     return false;
   }else if(password == '' || password == undefined){
+
     document.getElementById('password').classList.add('red-border');
     toast.error('Please enter password !!')
     return false;
   }else if(password !== confirmpassword){
+    
       document.getElementById('password').classList.add('red-border');
       document.getElementById('cpassword').classList.add('red-border');
       toast.error("Passwords do not match !!")

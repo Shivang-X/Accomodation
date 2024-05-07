@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { GrLocation } from 'react-icons/gr';
 import { getUserAd } from '../../src/actions/adActions';
-// import { logout } from "@/actions/userActions";
 import { FaUserAlt } from 'react-icons/fa';
 import { MdOutlineAlternateEmail } from 'react-icons/md';
 import { FiPhoneCall } from 'react-icons/fi';
@@ -23,15 +22,17 @@ const Profile = () => {
 
     const { isAuthenticated, user, loading, errors } = useSelector(state => state.auth)
 
-    useEffect(() => {
-        if (!isAuthenticated) {
-            router.push('/')
-          }
-        dispatch(getUserAd(session))
-    }, [isAuthenticated])
+    // useEffect(() => {
+    //     console.log(isAuthenticated)
+    //     if (!isAuthenticated) {
+    //         router.push('/')
+    //     }
+    //     dispatch(getUserAd(session))
+    // }, [isAuthenticated])
 
     const { loading: adloading, ads } = useSelector((state) => state.getads);
     const { data, error } = useSWR("Get Ads", () => dispatch(getUserAd(session)))
+    console.log("here");
 
     const handleLogout = async (e) => {
         e.preventDefault();

@@ -396,9 +396,13 @@ body {
     background-color: #ff0000
 }
 
-.profile .fields {
+.profile .fields , .update-profile .fields{
     display: flex;
     margin-top: 20px;
+}
+
+.update-profile .fields > div{
+    margin: 0 10px;
 }
 
 .profile .heading {
