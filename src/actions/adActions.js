@@ -10,7 +10,6 @@ export const getAds = () => async (dispatch) => {
         })
     
         const res = await axios.get("http://localhost:8000/getads", {withCredentials: true});
-        // const res = await axios.get("http://localhost:3000/api/getads", {withCredentials: true});
     
         dispatch({
             type: "GET_ADS_SUCCESS",
@@ -32,8 +31,6 @@ export const getAd = ( _country, state , city ) => async (dispatch) => {
         dispatch({
             type: "ALL_ADS_REQUEST"
         })
-        // const res = await axios.get(`http://localhost:8000/ads?country=${_country}&state=${state}&city=${city}`, { withCredentials: true })
-        // const res = await axios.get(`http://localhost:3000/api/ads?country=${_country}&state=${state}&city=${city}`, { withCredentials: true })
         const res = await axios.get(`https://homeasy.vercel.app/api/ads?country=${_country}&state=${state}&city=${city}`, { withCredentials: true })
 
         dispatch({

@@ -31,8 +31,6 @@ const Profile = () => {
     // }, [isAuthenticated])
 
     const { loading: adloading, ads } = useSelector((state) => state.getads);
-    const { data, error } = useSWR("Get Ads", () => dispatch(getUserAd(session)))
-    console.log("here");
 
     const handleLogout = async (e) => {
         e.preventDefault();
@@ -40,6 +38,8 @@ const Profile = () => {
         router.push({ pathname: "/"});
         toast.success('Logged out Successfully !')
     }
+
+    console.log(user?.houses?.length);
     
     return (
         <div className="profile-section">
@@ -71,9 +71,9 @@ const Profile = () => {
                 <button onClick={() => router.push('/postad')} type="submit">Post New Advertisement</button>
             </div>
             <div>
-            {adloading ? (<CardLoader/>) : (
-            ads.length > 0 ? (
-                ads.map((ad, index) => 
+            {loading ? (<CardLoader/>) : (
+            user?.houses?.length > 0 ? (
+                user.houses.map((ad, index) => 
                     <div className="cards" key={index}>
                         <div className="card">
                             <div className="top">
@@ -85,7 +85,7 @@ const Profile = () => {
                                             <div className="section">
                                                 <span className="city">{ad.city} - </span>
                                                 <span className="pincode">{ad.pincode} | </span>
-                                                <span className="createdAt">{ad.createdAt.substring(0,10)} |</span>
+                                                {/* <span className="createdAt">{ad.createdAt.substring(0,10)} |</span> */}
                                                 <div>
                                                     
                                                     <input type="checkbox" className="modal-btn" id="modal-btn" name="modal-btn"/>
@@ -101,7 +101,7 @@ const Profile = () => {
                                                             document.querySelector(`.modal-wrap${index}`).classList.remove('s')}}>X</button>
                                                         </div>
                                                         <div className={`modal-wrap modal-wrap${index}`}>	
-                                                        <MapCaller ad={[ad]} />
+                                                        {/* <MapCaller ad={[ad]} /> */}
                                                         </div>			          		
                                                     </div>
                                                 </div>
